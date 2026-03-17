@@ -18,6 +18,6 @@ func main() {
 
 	isValid := slices.Contains(commands, command)
 	if !isValid {
-		fmt.Printf("%s command not found", command)
+		fmt.Printf("%s: command not found\n", command)
 	}
 }
