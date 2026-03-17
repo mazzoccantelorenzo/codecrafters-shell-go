@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 )
 
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
@@ -16,8 +17,11 @@ func main() {
 	// Captures the user's command in the "command" variable
 	command, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 
-	isValid := slices.Contains(commands, command)
+	formattedCommand := string(strings.Split(command, "\n")[0])
+
+	isValid := slices.Contains(commands, formattedCommand)
+
 	if !isValid {
-		fmt.Printf("%s: command not found\n", command)
+		fmt.Println(formattedCommand, ": command not found")
 	}
 }
