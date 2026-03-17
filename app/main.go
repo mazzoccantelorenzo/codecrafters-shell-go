@@ -18,7 +18,7 @@ func main() {
 	command, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 
 	formattedCommand := string(strings.Split(command, "\n")[0])
-
+	fmt.Print(formattedCommand)
 	isValid := slices.Contains(commands, formattedCommand)
 
 	if !isValid {
