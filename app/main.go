@@ -14,10 +14,10 @@ func main() {
 	fmt.Print("$ ")
 	var commands []string
 	// Captures the user's command in the "command" variable
-	command, err := bufio.NewReader(os.Stdin).ReadString('\n')
+	command, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 
 	isValid := slices.Contains(commands, command)
 	if !isValid {
-		fmt.Printf("$s command not found", command)
+		fmt.Printf("%s command not found", command)
 	}
 }
