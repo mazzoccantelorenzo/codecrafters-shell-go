@@ -12,15 +12,16 @@ import (
 var _ = fmt.Print
 
 func main() {
-	fmt.Print("$ ")
-	var commands []string
-	// Captures the user's command in the "command" variable
-	command, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+	for {
+		fmt.Print("$ ")
+		var commands []string
+		// Captures the user's command in the "command" variable
+		command, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+		command = strings.Trim(command, "\n")
 
-	formattedCommand := string(strings.Split(command, "\n")[0])
-	isValid := slices.Contains(commands, formattedCommand)
-
-	if !isValid {
-		fmt.Printf(formattedCommand, ": command not found")
+		isValid := slices.Contains(commands, command)
+		if !isValid {
+			fmt.Printf("%s: command not found\n", command)
+		}
 	}
 }
