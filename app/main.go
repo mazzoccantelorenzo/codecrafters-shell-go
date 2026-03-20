@@ -55,7 +55,7 @@ func getArgumentFromInput(input string, command string) string {
 }
 
 func printCommandNotFound(command string) {
-	fmt.Printf("%s: command not found\n", command)
+	fmt.Print(command, ": command not found\n")
 }
 
 func main() {
@@ -85,13 +85,13 @@ func main() {
 
 		if command == TYPE_COMMAND {
 			argument := getArgumentFromInput(input, command)
-
+			argument = argument[:len([]byte(argument))]
 			// If the argument is a command, then we can print 'is a shell builtin'
 			// For example: echo exit --> exit is the argument and it is indeed an existing command
 			if slices.Contains(commands, argument) {
-				fmt.Println(argument, "is a shell builtin")
+				fmt.Print(argument, " is a shell builtin\n")
 			} else {
-				fmt.Println(argument, ": not found")
+				fmt.Print(argument, ": not found\n")
 			}
 
 		}
