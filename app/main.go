@@ -4,19 +4,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"slices"
 	"strings"
 )
 
-// Commands is the list of all existing and valid commands
+// Commands is the list of all existing and valid BUILTIN_COMMANDS
 
-var commands = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND}
+var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND}
 
-// List of commands
+// List of BUILTIN_COMMANDS
 
 var EXIT_COMMAND = "exit"
 var ECHO_COMMAND = "echo"
 var TYPE_COMMAND = "type"
+
+var PATH = os.Getenv("PATH")
 
 func PrintDollar() {
 	fmt.Print("$ ")
@@ -37,7 +40,7 @@ func commandIsValid(input string) bool {
 	// Check if command is valid.
 	// This means that command is in existing command list
 
-	return slices.Contains(commands, input)
+	return slices.Contains(BUILTIN_COMMANDS, input)
 
 }
 func getCommandFromInput(input string) string {
@@ -86,12 +89,26 @@ func main() {
 		if command == TYPE_COMMAND {
 			argument := getArgumentFromInput(input, command)
 			argument = argument[:len([]byte(argument))]
-			// If the argument is a command, then we can print 'is a shell builtin'
+			//I f the argument is a command, then we can print 'is a shell builtin'
 			// For example: echo exit --> exit is the argument and it is indeed an existing command
-			if slices.Contains(commands, argument) {
+			if slices.Contains(BUILTIN_COMMANDS, argument) {
 				fmt.Print(argument, " is a shell builtin\n")
+			} else if slices.Contains(BUILTIN_COMMANDS, argument) {
+				// Here we try to search command in PATH
+				pathDirs := strings.Split(PATH, ":")
+
+				for _, path := range pathDirs {
+					argumentPath, _ := exec.LookPath(path)
+
+					if argumentPath != "" {
+						fmt.Print(argument, " is ", argumentPath)
+					}
+				}
+
 			} else {
+				//If command doesn't exist, then prints not found
 				fmt.Print(argument, ": not found\n")
+
 			}
 
 		}
