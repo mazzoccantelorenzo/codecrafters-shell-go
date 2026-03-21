@@ -61,11 +61,24 @@ func printCommandNotFound(command string) {
 	fmt.Print(command, ": command not found\n")
 }
 
+func printArgumentNotFound(argument string) {
+	fmt.Print(argument, ": not found\n")
+}
+
+func printArgumentIsBuiltin(argument string) {
+	fmt.Print(argument, " is a shell builtin\n")
+}
+
+func printArgumentIsInPath(argument string, path string) {
+	fmt.Print(argument, " is ", path, "\n")
+
+}
+
 func main() {
 	// command initialization
 	var command = ""
 
-	for command != EXIT_COMMAND {
+	for {
 		PrintDollar()
 
 		// input is the user's input
@@ -76,11 +89,16 @@ func main() {
 
 		//------- Input here is valid -------------------
 
+		if command == EXIT_COMMAND {
+			break
+		}
+
 		if command == ECHO_COMMAND {
 
 			// Command is basically the first element of the user's input -> input[0]
 			// We want to get the rest of the string, excluding command that is 'echo' for example
 			// We split the input and get the last element ("echo ", because we want the string without space at the beginning)
+
 			textToPrint := getArgumentFromInput(input, command)
 			fmt.Println(textToPrint)
 
@@ -89,35 +107,28 @@ func main() {
 		if command == TYPE_COMMAND {
 			argument := getArgumentFromInput(input, command)
 			argument = argument[:len([]byte(argument))]
-			//I f the argument is a command, then we can print 'is a shell builtin'
+
+			// If the argument is a command, then we can print 'is a shell builtin'
 			// For example: echo exit --> exit is the argument and it is indeed an existing command
+
 			if slices.Contains(BUILTIN_COMMANDS, argument) {
-				fmt.Print(argument, " is a shell builtin\n")
-			} else if slices.Contains(BUILTIN_COMMANDS, argument) {
+				printArgumentIsBuiltin(argument)
+			} else if !slices.Contains(BUILTIN_COMMANDS, argument) {
+
 				// Here we try to search command in PATH
-				pathDirs := strings.Split(PATH, ":")
 
-				for _, path := range pathDirs {
-					argumentPath, _ := exec.LookPath(path)
+				path, _ := exec.LookPath(argument)
 
-					if argumentPath != "" {
-						fmt.Print(argument, " is ", argumentPath)
-					}
+				if path != "" {
+					printArgumentIsInPath(argument, path)
 				}
 
-			} else {
-				//If command doesn't exist, then prints not found
-				fmt.Print(argument, ": not found\n")
-
 			}
-
 		}
 
-		//------- Input here is not valid -------------------
-
+		// Check if command is NOT valid
 		if !commandIsValid(command) {
 			printCommandNotFound(command)
 		}
-
 	}
 }
