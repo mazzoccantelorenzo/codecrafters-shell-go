@@ -121,6 +121,9 @@ func main() {
 
 				if path != "" {
 					printArgumentIsInPath(argument, path)
+				} else {
+
+					printArgumentNotFound(argument)
 				}
 
 			}
