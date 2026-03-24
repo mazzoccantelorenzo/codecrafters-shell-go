@@ -157,7 +157,10 @@ func main() {
 
 			//CD changes the working directory
 
-			os.Chdir(argument)
+			err := os.Chdir(argument)
+			if err != nil {
+				fmt.Print(err)
+			}
 
 		case TYPE_COMMAND:
 
