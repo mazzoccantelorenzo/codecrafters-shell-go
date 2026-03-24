@@ -10,7 +10,7 @@ import (
 )
 
 // BUILTIN_COMMANDS is the list of all existing and valid BUILTIN_COMMANDS
-var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND, PWD_COMMAND}
+var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND, PWD_COMMAND, CD_COMMAND}
 
 // List of BUILTIN_COMMANDS
 
@@ -18,6 +18,7 @@ var EXIT_COMMAND = "exit"
 var ECHO_COMMAND = "echo"
 var TYPE_COMMAND = "type"
 var PWD_COMMAND = "pwd"
+var CD_COMMAND = "cd"
 
 var PATH = os.Getenv("PATH")
 
@@ -102,6 +103,14 @@ func executeProgram(input string) {
 	fmt.Print(string(output))
 }
 
+func getWorkingDirectory() string {
+	workingDirectory, err := os.Getwd()
+	if err != nil {
+		fmt.Print(err)
+	}
+	return workingDirectory
+}
+
 func main() {
 	// command initialization
 	var command = ""
@@ -114,6 +123,7 @@ func main() {
 
 		// command is the command that we can retrieve from the input
 		command = getCommandFromInput(input)
+		argument := getArgumentFromInput(input, command)
 
 		switch command {
 
@@ -121,11 +131,10 @@ func main() {
 			return
 
 		case PWD_COMMAND:
-			workingDirectory, err := os.Getwd()
-			if err != nil {
-				fmt.Print(err)
-			}
-			fmt.Println(workingDirectory)
+
+			// PWD returns the working directory
+			fmt.Println(getWorkingDirectory())
+
 		case ECHO_COMMAND:
 
 			// Command is basically the first element of the user's input -> input[0]
@@ -136,9 +145,13 @@ func main() {
 			textToPrint := getArgumentFromInput(input, command)
 			fmt.Println(textToPrint)
 
-		case TYPE_COMMAND:
+		case CD_COMMAND:
 
-			argument := getArgumentFromInput(input, command)
+			//CD changes the working directory
+
+			os.Chdir(argument)
+
+		case TYPE_COMMAND:
 
 			// If the argument is a command, then we can print 'is a shell builtin'
 			// For example: echo exit --> exit is the argument and it is indeed an existing command
