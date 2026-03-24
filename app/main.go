@@ -37,7 +37,7 @@ func textInput() string {
 // A valid command means it is in BUILTIN_COMMANDS
 func commandIsValid(input string) bool {
 	// Check if command is valid.
-	// This means that command is in existing command list
+	// This means that command is in existing command list or in path
 	return slices.Contains(BUILTIN_COMMANDS, input)
 
 }
@@ -88,8 +88,16 @@ func commandIsInPath(command string) (bool, string) {
 
 }
 
-func executeProgram(command string) *exec.Cmd {
-	return exec.Command(command)
+func executeProgram(input string) {
+	args := strings.Fields(input)
+
+	//Variadic Unpacking to take all the arguments
+	cmd := exec.Command(args[0], args[1:]...)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Print(err)
+	}
+	fmt.Print(string(output))
 }
 
 func main() {
@@ -136,7 +144,9 @@ func main() {
 
 			} else {
 
-				isInPath, path := commandIsInPath(command)
+				// I pass the argument, as the argument is the command that i want to check
+				// for example echo 'cat', cat is the argument but we use it as a command usually
+				isInPath, path := commandIsInPath(argument)
 
 				if isInPath {
 
@@ -152,14 +162,14 @@ func main() {
 		}
 
 		//Here I check if the command is in PATH and I execute it
-		isInPath, _ := commandIsInPath(command)
+		commandIsInPath, _ := commandIsInPath(command)
 
-		if isInPath {
-			executeProgram(command)
-		}
+		if commandIsInPath {
+			// I pass the input as I get all the arguments inside this function
+			// In this way i can pass arguments to the command called
+			executeProgram(input)
+		} else {
 
-		// Check if command is NOT valid
-		if !commandIsValid(command) {
 			printCommandNotFound(command)
 		}
 	}
