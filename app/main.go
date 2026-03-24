@@ -159,7 +159,7 @@ func main() {
 
 			err := os.Chdir(argument)
 			if err != nil {
-				fmt.Print(err)
+				fmt.Println(err)
 			}
 
 		case TYPE_COMMAND:
