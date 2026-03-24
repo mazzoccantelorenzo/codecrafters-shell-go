@@ -121,7 +121,11 @@ func main() {
 			return
 
 		case PWD_COMMAND:
-
+			workingDirectory, err := os.Getwd()
+			if err != nil {
+				fmt.Print(err)
+			}
+			fmt.Println(workingDirectory)
 		case ECHO_COMMAND:
 
 			// Command is basically the first element of the user's input -> input[0]
