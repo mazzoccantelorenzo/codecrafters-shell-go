@@ -115,11 +115,12 @@ func main() {
 
 		//------- Input here is valid -------------------
 
-		if command == EXIT_COMMAND {
-			break
-		}
+		switch command {
 
-		if command == ECHO_COMMAND {
+		case EXIT_COMMAND:
+			return
+
+		case ECHO_COMMAND:
 
 			// Command is basically the first element of the user's input -> input[0]
 			// We want to get the rest of the string, excluding command that is 'echo'
@@ -129,9 +130,7 @@ func main() {
 			textToPrint := getArgumentFromInput(input, command)
 			fmt.Println(textToPrint)
 
-		}
-
-		if command == TYPE_COMMAND {
+		case TYPE_COMMAND:
 
 			argument := getArgumentFromInput(input, command)
 
@@ -157,9 +156,9 @@ func main() {
 					printArgumentNotFound(argument)
 
 				}
-
 			}
-		} else {
+
+		default:
 
 			//Here I check if the command is in PATH and I execute it
 			commandIsInPath, _ := commandIsInPath(command)
@@ -173,5 +172,6 @@ func main() {
 				printCommandNotFound(command)
 			}
 		}
+
 	}
 }
