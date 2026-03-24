@@ -9,8 +9,7 @@ import (
 	"strings"
 )
 
-// Commands is the list of all existing and valid BUILTIN_COMMANDS
-
+// BUILTIN_COMMANDS is the list of all existing and valid BUILTIN_COMMANDS
 var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND}
 
 // List of BUILTIN_COMMANDS
@@ -25,31 +24,32 @@ func PrintDollar() {
 	fmt.Print("$ ")
 }
 
+// textInput reads the string from the user input
 func textInput() string {
-
 	// I read the string that the user writes
 	// then I remove the final \n
-
 	input, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 	input = strings.Trim(input, "\n")
 	return input
 }
 
+// commandIsValid checks if command is valid.
+// A valid command means it is in BUILTIN_COMMANDS
 func commandIsValid(input string) bool {
-
 	// Check if command is valid.
 	// This means that command is in existing command list
-
 	return slices.Contains(BUILTIN_COMMANDS, input)
 
 }
+
+// getCommandFromInput returns the command from the textInput
 func getCommandFromInput(input string) string {
 	// Command is the first slice of the entire string
 	// 'echo hello world' ---> echo is command
-
 	return strings.Split(input, " ")[0]
 }
 
+// getArgumentFromInput returns the argument from the textInput
 func getArgumentFromInput(input string, command string) string {
 	// Argument is the last slice of the entire string
 	// 'echo hello world' --> hello world is argument
@@ -71,7 +71,25 @@ func printArgumentIsBuiltin(argument string) {
 
 func printArgumentIsInPath(argument string, path string) {
 	fmt.Print(argument, " is ", path, "\n")
+}
 
+// commandIsInPath returns presence of command in path and its corresponding path if exists
+func commandIsInPath(command string) (bool, string) {
+	// Here we try to search command in PATH
+	path, _ := exec.LookPath(command)
+
+	//If given path is empty, then it's not in PATH
+
+	if path != "" {
+		return true, path
+	} else {
+		return false, ""
+	}
+
+}
+
+func executeProgram(command string) *exec.Cmd {
+	return exec.Command(command)
 }
 
 func main() {
@@ -96,8 +114,9 @@ func main() {
 		if command == ECHO_COMMAND {
 
 			// Command is basically the first element of the user's input -> input[0]
-			// We want to get the rest of the string, excluding command that is 'echo' for example
-			// We split the input and get the last element ("echo ", because we want the string without space at the beginning)
+			// We want to get the rest of the string, excluding command that is 'echo'
+			// for example we split the input and get the last element
+			// ("echo ", because we want the string without space at the beginning)
 
 			textToPrint := getArgumentFromInput(input, command)
 			fmt.Println(textToPrint)
@@ -105,28 +124,38 @@ func main() {
 		}
 
 		if command == TYPE_COMMAND {
+
 			argument := getArgumentFromInput(input, command)
-			argument = argument[:len([]byte(argument))]
 
 			// If the argument is a command, then we can print 'is a shell builtin'
 			// For example: echo exit --> exit is the argument and it is indeed an existing command
 
 			if slices.Contains(BUILTIN_COMMANDS, argument) {
+
 				printArgumentIsBuiltin(argument)
-			} else if !slices.Contains(BUILTIN_COMMANDS, argument) {
 
-				// Here we try to search command in PATH
+			} else {
 
-				path, _ := exec.LookPath(argument)
+				isInPath, path := commandIsInPath(command)
 
-				if path != "" {
+				if isInPath {
+
 					printArgumentIsInPath(argument, path)
+
 				} else {
 
 					printArgumentNotFound(argument)
+
 				}
 
 			}
+		}
+
+		//Here I check if the command is in PATH and I execute it
+		isInPath, _ := commandIsInPath(command)
+
+		if isInPath {
+			executeProgram(command)
 		}
 
 		// Check if command is NOT valid

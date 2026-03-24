@@ -12,6 +12,9 @@ build:
 run:
 	@go run $(MAIN_PATH)
 
+s:
+	codecrafters submit
+
 clean:
 	@echo "Pulizia..."
 	@rm -f $(BINARY_NAME)
