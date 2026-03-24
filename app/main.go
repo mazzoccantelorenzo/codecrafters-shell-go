@@ -10,13 +10,14 @@ import (
 )
 
 // BUILTIN_COMMANDS is the list of all existing and valid BUILTIN_COMMANDS
-var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND}
+var BUILTIN_COMMANDS = []string{EXIT_COMMAND, ECHO_COMMAND, TYPE_COMMAND, PWD_COMMAND}
 
 // List of BUILTIN_COMMANDS
 
 var EXIT_COMMAND = "exit"
 var ECHO_COMMAND = "echo"
 var TYPE_COMMAND = "type"
+var PWD_COMMAND = "pwd"
 
 var PATH = os.Getenv("PATH")
 
@@ -118,6 +119,8 @@ func main() {
 
 		case EXIT_COMMAND:
 			return
+
+		case PWD_COMMAND:
 
 		case ECHO_COMMAND:
 
