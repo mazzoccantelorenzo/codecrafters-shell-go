@@ -88,6 +88,7 @@ func commandIsInPath(command string) (bool, string) {
 
 }
 
+// executeProgram executes the program and prints in shell the result of the program
 func executeProgram(input string) {
 	args := strings.Fields(input)
 
@@ -112,8 +113,6 @@ func main() {
 
 		// command is the command that we can retrieve from the input
 		command = getCommandFromInput(input)
-
-		//------- Input here is valid -------------------
 
 		switch command {
 
