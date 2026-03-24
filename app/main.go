@@ -55,8 +55,15 @@ func getCommandFromInput(input string) string {
 func getArgumentFromInput(input string, command string) string {
 	// Argument is the last slice of the entire string
 	// 'echo hello world' --> hello world is argument
-	return strings.Split(input, command+" ")[1]
 
+	textSlices := strings.Split(input, command+" ")
+	if len(textSlices) < 2 {
+
+		return ""
+	} else {
+		return textSlices[1]
+
+	}
 }
 
 func printCommandNotFound(command string) {
@@ -133,7 +140,8 @@ func main() {
 		case PWD_COMMAND:
 
 			// PWD returns the working directory
-			fmt.Println(getWorkingDirectory())
+			workingDirectory := getWorkingDirectory()
+			fmt.Println(workingDirectory)
 
 		case ECHO_COMMAND:
 
