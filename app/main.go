@@ -156,8 +156,11 @@ func main() {
 		case CD_COMMAND:
 
 			//CD changes the working directory
-
+			if argument == "~" {
+				argument = "/home"
+			}
 			err := os.Chdir(argument)
+
 			if err != nil {
 				fmt.Print("cd: ", argument, ": No such file or directory\n")
 			}
