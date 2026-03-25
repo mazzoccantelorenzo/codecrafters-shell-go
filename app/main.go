@@ -156,6 +156,8 @@ func main() {
 			// ("echo ", because we want the string without space at the beginning)
 
 			textToPrint := getArgumentFromInput(input, command)
+
+			strings.Trim(argument, "'")
 			fmt.Println(textToPrint)
 
 		case CD_COMMAND:
