@@ -19,7 +19,6 @@ var ECHO_COMMAND = "echo"
 var TYPE_COMMAND = "type"
 var PWD_COMMAND = "pwd"
 var CD_COMMAND = "cd"
-
 var PATH = os.Getenv("PATH")
 
 func PrintDollar() {
@@ -132,6 +131,12 @@ func main() {
 		command = getCommandFromInput(input)
 		argument := getArgumentFromInput(input, command)
 
+		// Check if the command is a variable.
+		// It's a variable if it starts with $
+		if strings.HasPrefix(command, "$") {
+			command = (os.Getenv(strings.Trim(command, "$")))
+		}
+
 		switch command {
 
 		case EXIT_COMMAND:
@@ -157,7 +162,7 @@ func main() {
 
 			//CD changes the working directory
 			if argument == "~" {
-				argument = "/home"
+				argument = "/home/"
 			}
 			err := os.Chdir(argument)
 
