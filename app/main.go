@@ -162,7 +162,7 @@ func main() {
 
 			//CD changes the working directory
 			if argument == "~" {
-				argument = "/home"
+				argument = os.Getenv("HOME")
 			}
 			err := os.Chdir(argument)
 
