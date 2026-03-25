@@ -159,7 +159,7 @@ func main() {
 
 			err := os.Chdir(argument)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Print("cd:", "/", argument, ": No such file or directory\n")
 			}
 
 		case TYPE_COMMAND:
