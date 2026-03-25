@@ -157,7 +157,7 @@ func main() {
 
 			textToPrint := getArgumentFromInput(input, command)
 
-			strings.Trim(argument, "'")
+			strings.Trim(textToPrint, "'")
 			fmt.Println(textToPrint)
 
 		case CD_COMMAND:
