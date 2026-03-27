@@ -156,13 +156,15 @@ func main() {
 			// ("echo ", because we want the string without space at the beginning)
 
 			textToPrint := getArgumentFromInput(input, command)
-			_, _, found := strings.Cut(textToPrint, "'")
+			_, textAfter, found := strings.Cut(textToPrint, "'")
 			if found {
 
 				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
 
 			} else {
-				fmt.Printf(textToPrint)
+				textToPrint := strings.Fields(textAfter)
+
+				fmt.Print(textToPrint)
 			}
 
 		case CD_COMMAND:
