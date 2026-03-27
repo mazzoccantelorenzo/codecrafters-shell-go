@@ -158,7 +158,6 @@ func main() {
 			textToPrint := getArgumentFromInput(input, command)
 			_, _, found := strings.Cut(textToPrint, "'")
 			if found {
-				fmt.Print("found:", found)
 
 				fmt.Print(textToPrint, "\n")
 
