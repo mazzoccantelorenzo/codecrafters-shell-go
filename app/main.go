@@ -157,14 +157,15 @@ func main() {
 
 			textToPrint := getArgumentFromInput(input, command)
 			_, _, found := strings.Cut(textToPrint, "'")
+			textToPrint = strings.Trim(textToPrint, "'")
 			if found {
 
-				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
+				fmt.Print(textToPrint)
 
 			} else {
 				listOfwords := strings.Fields(argument)
-				textToPrint = strings.Join(listOfwords, " ")
-				fmt.Println(string(textToPrint))
+				textToPrint = string(strings.Join(listOfwords, " "))
+				fmt.Println(textToPrint)
 			}
 
 		case CD_COMMAND:
