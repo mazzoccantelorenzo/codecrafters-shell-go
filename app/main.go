@@ -159,7 +159,7 @@ func main() {
 			_, _, found := strings.Cut(textToPrint, "'")
 			if found {
 
-				fmt.Print(textToPrint, "\n")
+				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
 
 			} else {
 				fmt.Println(textToPrint)
