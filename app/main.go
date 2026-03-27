@@ -164,7 +164,8 @@ func main() {
 
 			} else {
 				listOfwords := strings.Fields(argument)
-				textToPrint = string(strings.Join(listOfwords, " "))
+				composedString := strings.Join(listOfwords, " ")
+				textToPrint = strings.Trim(composedString, "'")
 				fmt.Println(textToPrint)
 			}
 
