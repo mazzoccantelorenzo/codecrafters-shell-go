@@ -164,7 +164,7 @@ func main() {
 			} else {
 				listOfwords := strings.Fields(argument)
 				textToPrint = strings.Join(listOfwords, " ")
-				fmt.Print(string(textToPrint))
+				fmt.Println(string(textToPrint))
 			}
 
 		case CD_COMMAND:
