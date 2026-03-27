@@ -160,7 +160,7 @@ func main() {
 			textToPrint = strings.Trim(textToPrint, "'")
 			if found {
 
-				fmt.Print(textToPrint)
+				fmt.Println(textToPrint)
 
 			} else {
 				listOfwords := strings.Fields(argument)
