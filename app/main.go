@@ -163,7 +163,7 @@ func main() {
 
 			} else {
 
-				fmt.Println(strings.Trim(strings.Fields(textToPrint),"[", "]")
+				fmt.Println(strings.Fields(textToPrint))
 			}
 
 		case CD_COMMAND:
