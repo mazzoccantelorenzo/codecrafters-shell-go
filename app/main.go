@@ -157,15 +157,14 @@ func main() {
 
 			textToPrint := getArgumentFromInput(input, command)
 			_, _, found := strings.Cut(textToPrint, "'")
-			textToPrint = strings.Trim(textToPrint, "'")
+			textToPrint = strings.ReplaceAll(textToPrint, "'")
 			if found {
 
-				fmt.Println(strings.Trim(textToPrint, "'"))
+				fmt.Println(textToPrint)
 
 			} else {
 				listOfwords := strings.Fields(argument)
-				composedString := strings.Join(listOfwords, " ")
-				textToPrint = strings.Trim(composedString, "'")
+				textToPrint = strings.Join(listOfwords, " ")
 				fmt.Println(textToPrint)
 			}
 
