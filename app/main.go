@@ -162,9 +162,9 @@ func main() {
 				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
 
 			} else {
-				words := strings.Fields(argument)
-				fmt.Println("WORDS:", words)
-				fmt.Println(words[1:])
+				listOfwords := strings.Fields(argument)
+				textToPrint = strings.Join(listOfwords, " ")
+				fmt.Print(string(textToPrint))
 			}
 
 		case CD_COMMAND:
