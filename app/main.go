@@ -162,7 +162,7 @@ func main() {
 				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
 
 			} else {
-				fmt.Println(strings.Fields(textToPrint))
+				fmt.Println(strings.Fields(string(textToPrint)))
 			}
 
 		case CD_COMMAND:
