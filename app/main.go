@@ -157,7 +157,7 @@ func main() {
 
 			textToPrint := getArgumentFromInput(input, command)
 			_, _, found := strings.Cut(textToPrint, "'")
-			textToPrint = strings.ReplaceAll(textToPrint, "'")
+			textToPrint = strings.ReplaceAll(textToPrint, "'", "")
 			if found {
 
 				fmt.Println(textToPrint)
