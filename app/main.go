@@ -162,8 +162,8 @@ func main() {
 				fmt.Print(strings.Trim(textToPrint, "'"), "\n")
 
 			} else {
-				words := strings.Fields(input)
-
+				words := strings.Fields(argument)
+				fmt.Println("WORDS:", words)
 				fmt.Println(words[1:])
 			}
 
