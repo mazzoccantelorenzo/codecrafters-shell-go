@@ -155,7 +155,7 @@ func main() {
 			// for example we split the input and get the last element
 			// ("echo ", because we want the string without space at the beginning)
 
-			textToPrint := strings.Trim(getArgumentFromInput(input, command), "'")
+			textToPrint := getArgumentFromInput(input, command)
 			_, _, found := strings.Cut(textToPrint, "'")
 			if found {
 				fmt.Print("found:", found)
