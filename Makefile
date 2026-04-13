@@ -1,7 +1,7 @@
 BINARY_NAME=app
 MAIN_PATH=./app/main.go
 
-.PHONY: all build run clean test lint
+.PHONY: all build run s clean test lint
 
 all: build
 
